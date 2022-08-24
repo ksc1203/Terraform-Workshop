@@ -595,3 +595,513 @@ Terraform에서 관리하는 인프라가 파괴됩니다. 파괴하기 전에 �
 "종속성"에 영향을주는 대신 -target 플래그는 지정된 대상에 의존하는 모든 자원도 삭제합니다. 자세한 내용은 terraform plan의 target 문서를 참조하십시오.
 terraform destroy 명령의 동작은 terraform plan -destroy 명령으로 언제든지 미리 볼 수 있습니다.
 
+### FMT
+  
+terraform rmt 명령은 Terraform 구성 파일을 표준 형식 및 스타일로 다시 쓰는데 사용됩니다. 이 명령은 Terraform 언어 스타일 규칙의 하위 집합과 함께 가독성을 위한 기타 작은 조정 사항을 적용합니다.
+
+#### Usage
+
+```
+terraform fmt [options] [dir]
+```
+
+Terraform 리소스의 시각적 종속성 그래프를 출력합니다.
+그래포는 DOT 형식으로 출력됩니다. 이 형식을 읽을수 있는 일반적인 프로그램은 GraphViz이지만 이 형식을 읽을수 있는 웹 서비스도 있습니다.
+
+#### Generating Images
+
+```
+terraform graph | dot -Tpng > graph.png
+terraform graph | dot -Tsvg > graph.svg
+```
+
+### IMPORT
+  
+terraform import 명령은 기존 리소스를 Terraform으로 가져 오는데 사용됩니다.
+
+#### Usage
+
+```  
+terraform import [options] ADDRESS ID
+```
+
+Import는 ID에서 기존 리소스를 찾아 주어진 ADDRESS에 Terraform 상태로 가져옵니다.
+ADDRESS는 유효한 리소스 주소여야 합니다. 모든 자원 주소가 유효하기 때문에 import 명령은 자원을 모듈로 가져오거나 상태의 루트로 직접 가져올 수 있습니다.
+
+ID는 가져오는 자원유형에 따라 다릅니다. 예를들어 AWS 인스턴스의 경우 인턴스 ID (i-abcd1234)이지만 AWS Route53 영역의 경우 영역 ID (Z12ABC4UGMOZ2N)입니다. ID 형식에 ㅐ한 자세한 내용은 제공 업체 설명서를 참조하십시오. 확실하지 않은 경우 ID를 사용해 보십시오. ID가 유효하지 않으면 오류 메시지만 표시됩니다.
+
+#### Example: Import into Resource
+
+이 예제는 AWS 인스턴스를 foo라는 aws_instance 리소스로 가져옵니다.
+
+```
+terraform import aws_instance.foo i-abcd1234
+```
+
+#### Example: Import into Module
+
+아래 예제는 AWS 인스턴스를 bar라는 aws_instance 리소스로 foo라는 모듈로 가져옵니다.
+
+```  
+terraform import module.foo.aws_instance.bar i-abcd1234
+```
+
+#### Example: Import into Resource configured with count
+
+아래 예제는 인스턴스를 count로 구성된 baz라는 aws_instance 리소스의 첫번째 인스턴스로 가져옵니다.
+
+```  
+terraform import 'aws_instance.baz[0]' i-abcd1234
+```
+
+### INIT
+  
+terraform init 명령은 Terraform 구성 파일이 포함된 작업 디렉토리를 초기화 하는데 사용됩니다. 새 Terraform 구성을 작성하거나 기존 버전 구성을 버전 제어에서 복제한 후에 실행해야하는 첫번째 명령입니다. 이 명령을 여러 번 실행하는것이 안전합니다.
+
+#### Usage
+
+```  
+terraform init [options] [dir]
+```
+
+### OUTPUT
+
+terraform output 명령은 상태 파일에서 출력 변수의 값을 추출하는데 사용됩니다.
+
+#### Usage
+
+```  
+Terraform output [options] [NAME]
+```
+
+#### Options
+
+-json - 지정된 경우 출력은 출력당 키를 사용하여 JSON 오브젝트로 형식화 됩니다. NAME을 정하면 지정된 출력만 반환됩니다. 추가 처리를 위해 jq와 같은 도구에 파이프로 연결할 수 있습니다.
+
+### PLAN  
+  
+terraform plan 명령은 실행 계획을 작성하는데 사용됩니다. Terraform은 명시적으로 비활성화되지 않은 경우 새로 고침을 수행한 다음 구성 파일에 지정된 원하는 상태를 달성하는데 필요한 작업을 결정합니다.
+
+이 명령은 실제 자원이나 상태를 변경하지 않고 일련의 변경에 대한 실행 계획이 예상과 일치하는지 확인하는 편리한 방법입니다.
+
+#### Usage
+
+```  
+Terraform plan [option] [dir]
+```
+
+#### Options
+
+-destroy - 설정된 경우 알려진 모든 자원을 삭제하는 계획을 생성합니다.
+-input=true - 직접 설정되지 않은 경 변수 입력을 요청합니다.
+-target=resource - 타게팅할 리소스 주소입니다. 이 플래그는 여러 번 사용할 수 있습니다. 자세한 내용은 아래를 참조하십시오.
+-var 'foo=bar' - Terraform 구성에서 변수를 설정합니다.
+-var-file=foo - Terraform 구성의 변수를 변수 파일에서 설정합니다. Terraform.tfvars 또는 .auto.tfvars 파일이 현재 디렉토리에 있으면 자동으로 로드됩니다. 이 플래그는 여러 번 사용할 수 있습니다.
+
+#### Resource Targeting
+
+-target 옵션을 사용하려면 리소스의 하위 집합에만 Terraform의 주의를 집중시킬 수 있습니다. 자원 주소 구문은 제한 조건을 지정하는데 사용됩니다.
+이 타겟팅 기능은 실수 복구 또는 Terraform 제한 문제 해결과 같은 예외적인 상황을 위해 제공됩니다. 일상적인 작업에는 -target을 사용하지 않는것이 좋습니다. 이로 인해 구성 드리프트가 감지되지 않고 실제 자원 상태가 구성과 어떻게 관련 되는지 혼동될 수 있습니다.
+  
+### PROVIDERS  
+ 
+terraform provider 명령은 현재 구성에 사용된 제공자에 대한 정보를 출력합니다.
+
+#### Usage
+
+```
+terraform providers [config-path]
+```
+
+#### Example
+
+```  
+ . 
+├── provider.aws
+├── provider.terraform
+└── module.eks
+          ├── provider.aws (inherited)
+          ├── provider.kubernetes
+          ├── provider.local
+          └── provider.template
+```
+  
+```
+ .
+├── provider.aws
+├── provider.terraform 
+└── module.worker
+         ├── provider.aws (inherited)
+         └── module.worker
+                  └── provider.aws (inherited)
+```
+
+### STATE
+
+terraform state 명령은 고급 상태 관리에 사용됩니다. Terraform 사용이 향상됨에 따라 Terraform 상태를 수정해야하는 경우가 있습니다. 상태를 직접 수정하는 대신 terraform state 명령을 사용할 수 있습니다.
+
+이 명령은 중첩된 하위 명령이며 추가 하위 명령이 있습니다.
+
+#### Usage
+
+```
+terraform state <subcommand> [options] [args]
+```
+
+##### subcommands
+
+* list
+* mv
+* pull
+* push
+* rm
+* show
+
+#### Remote State
+
+Terraform state 부속 명령은 모두 마치 로컬 상태인 것처럼 원격 상태에서 작동합니다. 각 읽기 및 쓰기가 전체 네트워크 왕복을 수행하므로 읽기 및 쓰기가 평소보다 오래 걸릴 수 있습니다.
+
+## PROVIDER
+  
+Terraform은 물리적 시스템, VM, 네트워크 스위치, 컨테이너 등과 같은 인프라 리소스를 생성, 관리 및 업데이트하는 데 사용됩니다. 거의 모든 인프라 유형이 Terraform의 리소스로 표현 될 수 있습니다.
+
+### AWS PROVIDER
+  
+AWS (Amazon Web Services) 공급자는 AWS에서 지원하는 많은 리소스와 상호 작용하는데 사용됩니다. 공급자를 사용하려면 적절한 자격 증명으로 공급자를 구성해야 합니다.
+아래 그림은 AWS Provider를 선언한 예시 코드입니다.
+
+```hcl 
+# Configure the AWS Provider
+provider"aws"{
+  region ="ap-northeast-2"}
+# Create a VPC
+resource"aws_vpc" "example"{
+  cidr_block ="10.0.0.0/16"}
+```
+
+#### Authentication
+
+AWS 공급자는 인증을 위한 신임 정보를 제공하는 유연한 수단을 제공합니다. 다음과 같은 방법이 순서대로 지원되며 아래에 설명되어 있습니다.
+
+* Static credentials
+* Environment variables
+* Shared credentials file
+* EC2 Role
+
+##### Static credentials
+
+※ info
+모든 Terraform 구성에 대한 자격 증명 하드 코딩은 권장되지 않으며 이 파일이 공개 버전 제어 시스템에 커밋되면 비밀 유출 위험이 있습니다.
+
+```hcl
+provider"aws"{
+  region     ="ap-northeast-2"access_key ="my-access-key"secret_key ="my-secret-key"}
+```
+
+##### Environment variable
+
+Aws Access Key 및 AWS Secret Key를 각각 나타내는 AWS_ACCESS_KEY__ID 및 AWS_SECRET_ACCESS_KEY 환경 변수를 통해 자격 증명을 제공할 수 있습니다.
+
+```hcl
+provider"aws"{}
+```
+
+```hcl
+export AWS_ACCESS_KEY_ID="my-access-key" export AWS_SECRET_ACCESS_KEY="my-secret-key" export AWS_DEFAULT_REGION="ap-northeast-2" terraform plan
+```
+
+##### Shared credentials file
+
+AWS 자격 증명 파일을 사용하여 자격 명을 지정할 수 있습니다. 기본 위치는 Linux 및 OS X에서 $HOME/.aws/credentials 이거나 Windows 사용자의 경우 %USERPROFILE%\.aws\credentials 입니다.
+
+```hcl
+provider"aws"{
+  region                  ="us-west-2"shared_credentials_file ="/Users/tf_user/.aws/cred-custom"profile                 ="custom-profile"}
+```
+
+##### EC2 Role
+
+IAM 역할을 사용하여 IAM 인스턴스 프로파일이 있는 EC2 인스턴스에서 Terraform을 실행중인 경우 Terraform은 메타 데이터 API 엔드 ㅗ인트에 자격 증명을 요청하여 권한을 획득할 수 있습니다.
+
+##### Assume role
+
+역할 ARN이 제공되면 Terraform은 제공된 자격 증명을 사용하여 이 역할을 맡습니다.
+
+```hcl  
+provider"aws"{
+  assume_role{
+    role_arn     ="arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME"session_name ="SESSION_NAME"external_id  ="EXTERNAL_ID"}
+}
+```
+
+## PROVISIONERS
+  
+Provisioner를 사용하면 서버 또는 기타 인프라 개체를 서비스 할 수 있도록 로컬 컴퓨터 또는 원격 ㅓㅁ퓨터에서 특정 작업을 모델링 할 수 있습니다.
+
+#### Provisioners are a Last Resort
+
+Terraform에는 Terraform의 선언적 모델에서 직접 표현할 수 없는 특정 행동이 항상 있을것 임을 알고 프로비저닝의 개념을 실용주의의 척도로 포함합니다.
+하지만 이것은 Terraform 사용에 상당한 복잡성과 불확실성을 추가합니다. 최대한 Terraform에서 제공되는 기본 기능으로 시도하고, 다른 옵션이 없을 경우에만 Provisioner를 사용하는 것이 좋습니다.
+  
+### PROVISIONER CONNECTION SETTINGS  
+
+대부분의 프로 비져는 SSH 또는 WinRM을 통해 원격 리소스에 액세스 해야하며 연결 방법에 대한 세부 정보가 포함된 중첩된 연결 블록이 필요합니다.
+
+#### Example
+
+```hcl
+# Copies the file as the root user using SSH
+provisioner"file"{
+  source      ="conf/myapp.conf"destination ="/etc/myapp.conf"connection{
+    type     ="ssh"user     ="root"password ="${var.root_password}"host     ="${var.host}"}
+}
+```
+
+### PROVISIONERS WITHOUT A RESOURCE
+  
+특정 리소스와 직접 연결되지 않은 프로 비저를 실행해야 하는 경우 해당 공급자를 null_resource와 연결할 수 있습니다.
+
+#### Example
+
+````hcl  
+resource"aws_instance" "cluster"{
+  count =3
+  # ...
+}
+resource"null_resource" "cluster"{
+  # Changes to any instance of the cluster requires re-provisioning
+triggers ={
+    cluster_instance_ids ="${join(",", aws_instance.cluster.*.id)}"}
+  # Bootstrap script can run on any instance of the cluster
+  # So we just choose the first in this case
+connection{
+    host ="${element(aws_instance.cluster.*.public_ip, 0)}"}
+provisioner"remote-exec"{
+    # Bootstrap script called with private_ip of each node in the cluster
+inline =[
+      "bootstrap-cluster.sh ${join(" ", aws_instance.cluster.*.private_ip)}",
+    ]
+  }
+}
+```
+
+#### Example - kubernetes provider 사용 전
+
+```hcl 
+resource"null_resource" "executor"{
+  depends_on =[aws_eks_cluster.cluster]
+triggers ={
+    endpoint =aws_eks_cluster.cluster.endpoint}
+provisioner"local-exec"{
+    working_dir =path.modulecommand =<<EOSecho"kubectl apply -f aws-auth.yaml"EOSinterpreter =var.local_exec_interpreter}
+}
+```
+
+#### Example - kubernetes provider 사용 후
+
+```hcl
+resource"kubernetes_config_map" "aws_auth"{
+  depends_on =[aws_eks_cluster.cluster]
+metadata{
+    name      ="aws-auth"namespace ="kube-system"}
+data ={
+    mapRoles =yamlencode(var.map_roles)
+    mapUsers =yamlencode(var.map_users)
+  }
+}
+```
+
+## MODULES
+
+모듈은 함께 사용되는 여러 리소스의 컨테이너입니다. 모듈을 사용하여 단한 추상화를 생성 할 수 있으므로 물리적 객체의 관점이 아닌 아키텍처의 관점에서 인프라를 설명 할 수 있습니다.
+Terraform plan 또는 terraform apply시 작업 디렉토리의 .tf 파일은 루트 모듈에서 함께 적용됩니다. 해당 모듈은 다른 모듈을 ㅗ출하고 하나의 출력 값을 다른 모듈의 입력 값으로 전달하여 서로 연결할 수 있습니다.
+
+```
+$ tree sample-module/
+ . 
+├── README.md
+├── main.tf 
+├── variables.tf 
+├── outputs.tf 
+├── ... 
+├── examples/ 
+│      ├── main.tf 
+│      ├── .../
+```
+
+* Module Sources
+* Module Composition
+
+### MODULE SOURCES
+  
+모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
+Terraform은 terraform init의 모듈 설치 단계에서 이를 사용하여 소스 코드를 로컬 디스크의 디렉토리에 다운로드하여 다른 Terraform 명령에서 사용할 수 있도록 합니다.
+모듈 설치 프로그램은 아래 나열된 다양한 소스 유형에서 설치를 지원합니다.
+
+#### Local paths
+
+로컬 경로 참조를 사용하면 단일 소스 리포지토리 내 구성의 일부를 가져올 수 있습니다.
+
+```hcl
+module"consul"{
+  source ="./consul"}
+```
+
+#### GitHub
+
+Terraform은 접두사가 없는 github.com URL을 인식하여 자동으로 Git 리포지토리 소스로 해석합니다.
+
+```hcl
+module"consul"{
+  source ="github.com/hashicorp/example"}
+```
+
+SSH를 통해 복제하려면 다음 형식을 사용하십시오.
+
+```hcl
+module"consul"{
+  source ="git@github.com:hashicorp/example.git"}
+```
+
+#### Generic Git, Mercurial repositories
+
+임의의 Git 리포지토리는 주소 앞에 특수한 git:: 접두사를 붙여서 사용할 수 있습니다. HTTPS 또는 SSH를 사용하려면 다음의 방법을 사용하십시오.
+  
+```hcl
+module"vpc"{
+  source ="git::https://example.com/vpc.git"}
+module"storage"{
+  source ="git::ssh://username@example.com/storage.git"}
+```
+
+#### S3 buckets
+
+특수한 s3:: 접두어와 경로 스타일 S3 버킷 객체 URL을 사용하여 S3에 저장된 아카이브를 모듈 소스로 사용할 수 있습니다.
+
+```hcl  
+module"consul"{
+  source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
+```
+  
+### MODULE COMPOSITION
+  
+모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
+Terraform은 terraform init의 모듈 설치 단계에서 이를 사용하여 소스 코드를 로컬 디스크의 디렉토리에 다운로드하여 다른 Terraform 명령에서 사용할 수 있도록 합니다.
+모듈 설치 프로그램은 아래 나열된 다양한 소스 유형에서 설치를 지원합니다.
+
+#### Local paths
+
+로컬 경로 참조를 사용하면 단일 소스 리포지토리 내 구성의 일부를 가져올 수 있습니다.
+
+```hcl
+module"consul"{
+  source ="./consul"}
+```
+
+#### GitHub
+
+Terraform은 접두사가 없는 github.com URL을 인식하여 자동으로 Git 리포지토리 소스로 해석합니다.
+
+```hcl
+module"consul"{
+  source ="github.com/hashicorp/example"}
+```
+
+SSH를 통해 복제하려면 다음 형식을 사용하십시오.
+
+```hcl
+module"consul"{
+  source ="git@github.com:hashicorp/example.git"}
+```
+
+#### Generic Git, Mercurial repositories
+
+임의의 Git 리포지토리는 주소 앞에 특수한 git:: 접두사를 붙여서 사용할 수 있습니다. HTTPS 또는 SSH를 사용하려면 다음의 방법을 사용하십시오.
+
+```hcl
+module"vpc"{
+  source ="git::https://example.com/vpc.git"}
+module"storage"{
+  source ="git::ssh://username@example.com/storage.git"}
+```
+
+#### S3 buckets
+
+특수한 s3:: 접두어와 경로 스타일 S3 버킷 객체 URL을 사용하여 S3에 저장된 아카이브를 모듈 소스로 사용할 수 있습니다.
+
+```hcl
+module"consul"{
+  source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
+```
+
+### STATE
+  
+Terraform은 인프라 및 구성에 대한 상태를 저장해야 합니다. 이 상태는 Terraform에서 실제 리소스를 구성에 매핑하고 메타 데이터를 추적하며 대규모 인프라의 성능을 향상 시키는데 사용 됩니다.
+이 상태는 기본적으로 terraform.tfstate 라는 로컬 파일에 저장되지만 원격으로 저장할 수도 있으므로 팀 환경에서 더 잘 작동합니다.
+
+* Purpose of Terraform State
+* Remote State
+* State Locking
+  
+### PURPOSE OF TERRAFORM STATE
+  
+Terraform이 작동하려면 상태가 필수 요건입니다. 이 페이지는 Terraform 상태가 필한 이유를 설명합니다.
+
+#### Mapping to the Real World
+
+Terraform은 Terraform 구성을 실제 세계에 매핑하기 위해 일종의 데이터베이스가 필요합니다. 여러분의 설정에 리소스 "aws_instance" "foo"가 있는 경우 Terraform은 이 맵을 사용하여 인스턴스 i-abcd1234가 해당 리소스로 표시되어 있음을 알 수 있습니다.
+
+AWS와 같은 일부 공급자의 경우 Terraform은 이론적으로 AWS 태그와 같은 것을 사용할 수 있습니다. 하지만 모든 리소스가 태그를 지원하는 것은 아니며 모든 클라우드 제공 업체가 태그를 지원하는 것은 아닙니다.
+
+따라서 실제 환경의 리소스에 구성을 매핑하기 위해 Terraform은 자체 상태 구조를 사용합니다.
+
+#### Metadata
+
+Terraform은 리소스와 원격 객체 간의 매핑과 함께 리소스 종속성과 같은 메타 데이터도 추적해야합니다.
+
+Terraform은 일반적으로 구성을 사용하여 종속성 순서를 결정합니다. 그러나 Terraform 구성ㅓ 리소스를 삭제할 때 Terraform은 ㅐ당 리소스를 삭제하는 방법을 알아야합니다. Terraform은 구성에 없는 자원에 대한 맵핑이 존재하며 destroy plan을 볼 수 있습니다.
+
+#### Performance
+
+기본 매핑 외에 Terraform은 상태의 모든 리소스에 대한 속성 값의 캐시를 저장합니다.
+
+#### Syncing
+
+기본 구성에서 Terraform은 Terraform이 실행 된 현재 작업 디렉토리의 파일에 상태를 저장합니다. 팀에서 Terraform을 사용할 때는 모든 사람이 동일한 상태로 작업하여 동일한 원격 객체에 작업을 적용하는 것이 중요합니다.
+
+### REMOTE STATE
+  
+기본적으로 Terraform은 terraform.tfstate 라는 파일에 상태를 로컬로 저장합니다. 팀에서 Terraform으로 작업할 때 로컬 파일을 사용하면 각 사용자가 Terraform을 실행하기 전에 항상 최신 상태 데이터를 가지고 있는지 확인하고 동시에 다른 사람이 Terraform을 실행하지 않도록 해야하므로 Terraform 사용이 복잡해집니다.
+
+원격 상태에서 Terraform은 상태 데이터를 원격 데이f터 저장소에 기록한 다음 팀의 모든 구성원 간에 공유할 수 있습니다. Terraform은 Terraform Cloud, HashiCorp Consul, Amazon S3, Alibaba Cloud OSS 등의 상태 저장을 지원합니다.
+
+#### Delegation and Teamwork
+
+원격 상태는 더 쉬운 버전 제어 및 안전한 저장 이상을 제공합니다. 또한 출력을다른 팀에 위임 할 수도 있습니다. 이를 통해 인프라를 여러 팀이 액세스 할수 있는 구성 요소로 보다 쉽게 분류 할 수 있습니다.
+
+다시 말해 원격 상태를 통해 팀은 추가 구성 장소에 의존하지 않고 인프라 리소스를 읽기 전용 방식으로 공유할 수 있습니다.
+
+#### Locking and Teamwork
+
+완벽한 기능을 갖춘 원격 백엔드의 경우 Terraform은 상태 잠금을 사용하여 동일한 상태에 대한 Terraform의 동시 실행을 방지할 수 있습니다.
+
+#### Example
+
+```hcl
+terraform{
+  backend"s3"{
+    region ="ap-northeast-2"bucket ="terraform-mz-seoul"key    ="vpc-demo.tfstate"}
+}
+module"vpc"{
+  source ="github.com/nalbam/terraform-aws-vpc?ref=v0.12.24"region =var.regionname   =var.name}
+```
+  
+```hcl
+data"terraform_remote_state" "vpc"{
+  backend ="s3"config ={
+    region ="ap-northeast-2"bucket ="terraform-mz-seoul"key    ="vpc-demo.tfstate"}
+}
+module"eks"{
+  source ="github.com/nalbam/terraform-aws-eks?ref=v0.12.32"region =var.regionname   =var.namevpc_id     =data.terraform_remote_state.vpc.outputs.vpc_idsubnet_ids =data.terraform_remote_state.vpc.outputs.subnet_ids}
+```
+ 
