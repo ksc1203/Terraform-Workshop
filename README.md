@@ -104,6 +104,7 @@ resource "aws_instance" "example" {
  }
 ```
 
+-----
 ### PROVIDERS
   
 자원(Resource)은 Terraform 언어의 기본 구성이지만 자원의 동작은 연관된 자원 유형에 의존하며 이러한 유형은 제공자(Provider)에 의해 정의됩니다.
@@ -134,7 +135,8 @@ provider"google"{
 terraform init
 </code>
 </pre>
-  
+
+-----
 ### RESOURCE
   
 Terraform 언어에서 리소스는 가장 중요한 요소입니다. 각 리소스 블록은 가상 네트워크, 컴퓨팅 인스턴스 또는 DNS 레코드와 같은 상위 구성 요소와 같은 하나 이상의 인프라 개체를 설명합니다.
@@ -145,12 +147,10 @@ Terraform 언어에서 리소스는 가장 중요한 요소입니다. 각 리소
 
 아래는 aws ec2 instance를 잘 생성하는 가장 심플한 코드 입니다.
 
-<pre>
-<code>
+```hcl
 resource"aws_instance" "sample"{
   ami           =var.ami_idinstance_type =var.instance_type}
-</code>
-</pre>
+```
 
 Resource 블록을 사용하여 설정 합니다. Aws_instance의 자원을 생성하며, sample의 이름을 가집니다.
 블록 내의 ami instance_type은 aws_instance 자원 유형의 인수 입니다.
