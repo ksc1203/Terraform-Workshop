@@ -863,7 +863,7 @@ provisioner"file"{
 
 #### Example
 
-````hcl  
+```hcl  
 resource"aws_instance" "cluster"{
   count =3
   # ...
