@@ -484,3 +484,5 @@ resource "aws_elb" "example" {
 }
 </code>
 </pre>
+
+  ## COMMANDS (CLI)
