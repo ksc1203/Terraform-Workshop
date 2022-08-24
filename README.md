@@ -142,11 +142,8 @@ provider"google"{
 terraform init
 </code>
 </pre>
-
-
-  
-  
-  
-  
   
   ## RESOURCE
+  
+  Terraform 언어에서 리소스는 가장 중요한 요소입니다. 각 리소스 블록은 가상 네트워크, 컴퓨팅 인스턴스 또는 DNS 레코드와 같은 상위 구성 요소와 같은 하나 이상의 인프라 개체를 설명합니다.
+
