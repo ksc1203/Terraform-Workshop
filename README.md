@@ -1,5 +1,4 @@
 # Terraform-Workshop
------
 
 Terraform은 Resource를 선언적인 코드로 생성/관리 할 수 있도록 도와주는 도구 입니다. 이를 IaC(Infastructure as Code) 라고 부릅니다.
 여기에서는 Terraform의 기본적인 개념들을 소개합니다.
@@ -12,6 +11,7 @@ Terraform은 Resource를 선언적인 코드로 생성/관리 할 수 있도록 
 * State
  *Backends
 
+-----
 ## CONFIGURATION LANGUAGE
 
 Terraform은 HCL(Hashicorp Configuration Language) 이라는 인프라에 대한 간결한 설명이 가능하도록 설계된 자체 구성 언어를 사용합니다.
@@ -23,16 +23,14 @@ Terraform 언어의 주요 목적은 Resource를 선언하는 것입니다. 리�
 
 #### Arguments, Blocks, and Expressions
 
-<pre>
-<code>
+```hcl
 resource"aws_vpc" "main"{
   cidr_block =var.base_cidr_block}
 BLOCK_TYPE"BLOCK_LABEL" "BLOCK_LABEL"{
   // Block body
 IDENTIFIER =EXPRESSION # Argument
 }
-</code>
-</pre>
+```
 
 * Block은 다른 내용의 컨테이너이며 일반적으로 리소스와 같은 일종의 개체 구성을 나타냅니다. 블록은 Block Type을 가지며 0개 이상의 Block Label을 가질 수 있으며 여러 개의 인수와 중첩 된 블록을 포함하는 본문을 갖습니다.
 * Argument는 이름에 값을 할당합니다. 그것들은 블록 안에 작성합니다.
@@ -62,6 +60,7 @@ Terraform은 각각 일련의 리소스 유형을 정의하고 관리하는 Prov
 * Data Sources
 * Modules
 
+-----
 ### INPUT VARIABLES
 
 Input Variable은 Terraform 모듈의 매개 변수 역할을 하며, 다른 모듈 간에 매개 변수를 공유 할 수 있습니다.
@@ -70,8 +69,7 @@ Input Variable은 Terraform 모듈의 매개 변수 역할을 하며, 다른 모
 
 Variable 블록을 사용하여 설정 합니다.
 
-<pre>
-<code>
+```hcl
 variable"ami_id"{
   description ="The id of the machine image (AMI)."type        =string}
 variable"availability_zone_names"{
@@ -89,8 +87,7 @@ variable"docker_ports"{
       internal =8300external =8300protocol ="tcp"}
   ]
 }
-</code>
-</pre>
+```
 
 Description 인수를 사용하여 각 값의 목적을 간단히 설명 할 수 있습니다.
 Type 인수를 사용하면 변수 값으로 허용되는 타입을 제한 할 수 있습니다. 타입이 설정되지 않은 경우 모든 유형의 값이 허용됩니다.
@@ -100,14 +97,12 @@ Default 인수를 선언하면 해당 인수를 선언 하지 않았을때 정�
 
 변수를 선언한 모듈 내에서 표현식 내에서 var.<NAME>으로 값에 액세스 할 수 있습니다.
 
-<pre>
-<code>  
+```hcl
 resource "aws_instance" "example" {
   instance_type = "t2.micro"
   ami = var.ami_id
  }
-</code>
-</pre>
+```
 
 ### PROVIDERS
   
@@ -120,25 +115,15 @@ resource "aws_instance" "example" {
 
 Provider 블록을 사용하여 설정 합니다.
 
-<pre>
-<code>
+```hcl
 provider"aws"{
   region =var.region}
-</code>
-</pre>
+```
 
-<pre>
-<code>
+```hcl
 provider"google"{
   region  =var.regionproject =var.project}
-</code>
-</pre>
-  
-  
-  ```hcl
-  
-  
-  ```
+```
 
 #### Initialization
 
@@ -199,8 +184,7 @@ Terraform CLI는 다음과 같은 메타 인수를 정의합니다. 이 인수�
 
 4개의 EC2 instance를 생성 합니다.
 
-<pre>
-<code>
+```hcl
 resource "aws_instance" "server" {
   count = 4
   ami           = var.ami_id
@@ -208,25 +192,21 @@ resource "aws_instance" "server" {
   tags = {
     Name = "Server ${count.index}"
   }
-</code>
-</pre>
+```
 
-<pre>
-<code>
+```hcl
 }
 resource "aws_vpc" "this" {
   count = var.create_vpc ? 1 : 0
   cidr_block = var.vpc_cidr
 }
-</code>
-</pre>
+```
 
 #### depends_on
 
 EC2 instance를 생성하기 전, instance_profile을 생성해야 한다는것은 aws_insatance 안에 정의되어 있으므로 유추가 가능합니다. 하지만, aws_iam_role_policy는 Terraform이 유추해 낼 수 없으므로 선언해 주어야 합니다.
 
-<pre>
-<code>
+```hcl
 resource "aws_iam_role" "example" {
   name               = var.name
   assume_role_policy = "..."
@@ -247,15 +227,13 @@ resource "aws_instance" "example" {
     aws_iam_role_policy.example,
   ]
 }
-</code>
-</pre>
+```
 
 #### for_each
 
 Autoscaling Group에서 mixed_instances로 정의할 수 있는데 var.mixed_instances 배열로 n개의 값을 전달 할 수 있습니다.
 
-<pre>
-<code>
+```hcl
 resource "aws_autoscaling_group" "worker" {
   name = var.name
   min_size = var.min
@@ -279,11 +257,9 @@ resource "aws_autoscaling_group" "worker" {
     }
   }
 }
-</code>
-</pre>
+```
 
-<pre>
-<code>
+```hcl
       override {
         instance_type = var.instance_type
       }
@@ -293,28 +269,26 @@ resource "aws_autoscaling_group" "worker" {
       override {
         instance_type = var.mixed_instances.1
       }
-</code>
-</pre>
+```
 
 #### lifecycle
 
 리소스의 생명주기를 정의합니다.
 
-<pre>
-<code>
+```hcl
 resource "aws_launch_configuration" "worker" {
   // ...
   lifecycle {
     create_before_destroy = true
   }
 }
-</code>
-</pre>
+```
   
 create_before_destroy(bool) - 현재 업데이트 할 수 없는 리소스 인수를 변경해야하는 경우 Terraform은 기존 객체를 삭제한 다음 새로 구성된 인수로 새 대체 객체를 만듭니다.
 prevent_destroy(bool) - 인수가 구성에 존재하는 한 자원과 관련된 인프라 개체를 파괴하는 계획을 Terraform이 오류와 함께 거부하게 합니다.
 Ignore_changes(list of attribute names) - Terraform은 실제 인프라 개체의 현재 설정에서 차이를 감지하고 구성과 일치하도록 원격 개체를 업데이트를 시도 합니다. 하지만 외부에서 변경된 리소스를 변경 하고 싶지 않을때 사용될 수 있습니다.
 
+-----
 ### OUTPUT VALUES
 
 Output Value는 Terraform 모듈의 반환 값과 유사하며 여러 용도로 사용됩니다.
@@ -323,8 +297,7 @@ Output Value는 Terraform 모듈의 반환 값과 유사하며 여러 용도로 
 
 Output 블록을 사용 하여 설정합니다.
 
-<pre>
-<code>
+```hcl
 output "private_ip" {
   description = "The private IP address of the main server instance."
   value       = aws_instance.server.private_ip
@@ -337,8 +310,7 @@ output "db_password" {
   value       = aws_db_instance.db.password
   sensitive   = true
 }
-</code>
-</pre>
+```
 
 description 인수를 사용하여 각 값의 목적을 간단히 설명 할 수 있습니다.
 
@@ -352,6 +324,7 @@ depends_on 출력 값은 모듈에서 데이터를 전달하는 수단 일 뿐�
 
 상위 모듈에서 하위 모듈의 출력은 module.<MODULE NAME>.<OUTPUT NAME>로 표현할 수 있습니다. 예를 들어, server라는 하위 모듈이 private_ip라는 출력을 선언 한 경우 ㅐ당 값에 module.server.private_ip로 액세스할 수 있습니다.
 
+-----
 ### LOCAL VALUES
 
 Local Value는 이름을 표현식에 지정하여 모듈 내에서 반복하지 않고 여러 번 사용할 수 있습니다.
@@ -360,19 +333,16 @@ Local Value는 이름을 표현식에 지정하여 모듈 내에서 반복하지
 
 Locals 블록을 사용하여 설정합니다.
 
-<pre>
-<code>
+```hcl
 locals {
   service_name = "forum"
   owner        = "Community Team"
 }
-</code>
-</pre>
+```
 
 간단한 상수이거나, 다른 모듈 또는 다른 리소스 값을 반환하거나, 복잡한 표현식도 가능합니다.
 
-<pre>
-<code>
+```hcl
 locals {
   # 두개의 인스턴스의 ID List를 반환 합니다.
   instance_ids = concat(
@@ -393,9 +363,9 @@ locals {
   # 만들지 않 도록 설정 헸으면 변수에서 가져 온다.
   vpc_id = var.create_vpc ? element(concat(aws_vpc.this.*.id, [""]), 0) : var.vpc_id
 }
-</code>
-</pre>
+```
 
+-----
 ### DATA SOURCES
   
 Data Source를 통해 Terraform 구성의 다른곳에서 사용하기 위해 데이터를 가져오거나 계산할 수 있습니다. 데이터 소스를 사용하면 Terraform 구성이 Terraform 외부에서 정의되거나 다른 별도의 Terraform 구성으로 정의된 정보를 사용할 수 있습니다.
@@ -404,8 +374,7 @@ Data Source를 통해 Terraform 구성의 다른곳에서 사용하기 위해 �
 
 data 블록을 사용하여 설정합니다.
 
-<pre>
-<code>
+```hcl
 data "aws_ami" "example" {
   owners = ["self"]
   tags = {
@@ -414,14 +383,12 @@ data "aws_ami" "example" {
   }
   most_recent = true
 }
-</code>
-</pre>
+```
 
 Terraform이 지정된 데이터 소스 aws_ami에서 읽고 해당 로컬 이름 example으로 결과를 내보내도록 요청합니다.
 블록 본문 내에 ( { 와 } 사이 ) 데이터 소스에 의해 정의된 쿼리 제한 조건이 있습니다. 이 섹션의 대부분의 인수는 데이터 소스에 따라 다르며 실제로 이 예에서 most_recent, owners 및 tags는 모두 aws_ami 데이터 소스에 대해 별히 정의된 인수입니다.
 
-<pre>
-<code>
+```hcl
  data "aws_ami" "worker" {
   owners = ["602401143452"] # Amazon Account ID
   filter {
@@ -430,18 +397,16 @@ Terraform이 지정된 데이터 소스 aws_ami에서 읽고 해당 로컬 이�
   }
   most_recent = true
 }
-</code>
-</pre>
+```
 
-<pre>
-<code>
+```hcl
 data "aws_availability_zones" "azs" {
 }
 data "aws_caller_identity" "current" {
 }
-</code>
-</pre>
+```
 
+-----
 ### MODULES
   
 module은 함께 사용되는 여러 리소스의 컨테이너입니다.
@@ -453,20 +418,17 @@ module은 함께 사용되는 여러 리소스의 컨테이너입니다.
 
 Module 블록을 사용하여 설정합니다.
 
-<pre>
-<code>
+```hcl
 module "servers" {
   source = "./sub_module"
   servers = 5
 }
-</code>
-</pre>
+```
 
 module 키워드는 바로 뒤에 있는 레이블은 로컬 이름이며 호출 모듈은 이 모듈 인스턴스를 참조하는데 사용할 수 있습니다.
 모든 모듈에는 Terraform CLI에 의해 정의된 메타 인수인 source 인수가 필요합니다. 그 값은 모듈 구성 파일의 로컬 디렉토리에 대한 경로이거나 Terraform이 다운로드하여 사용해야 하는 원격 모듈 소스입니다.
 
-<pre>
-<code>
+```hcl
 module "vpc" {
   source = "github.com/nalbam/terraform-aws-vpc?ref=v0.12.22"
   region = var.region
@@ -474,8 +436,7 @@ module "vpc" {
   vpc_id   = var.vpc_id
   vpc_cidr = var.vpc_cidr
 }
-</code>
-</pre>
+```
 
 깃헙 주소 https://github.com/nalbam/terraform-aws-vpc 에서 v0.12.22 Tag를 지정하여 사용할 수 있습니다.
 
@@ -483,15 +444,14 @@ module "vpc" {
 
 모듈에 정의된 리소스는 캡슐화 되므로 호출 모듈은 해당 속성에 직접 액세스 할 수 없습니다. 그러나 자식 모듈은 출력값을 선언하여 호출 모듈이 액세스할 특정값을 선택적으로 내보낼 수 있습니다.
 
-<pre>
-<code>
+```hcl
 resource "aws_elb" "example" {
   // ...
   instances = module.servers.instance_ids
 }
-</code>
-</pre>
+```
 
+-----
 ## COMMANDS (CLI)
 
 Terraform은 명령 줄 인터페이스 (CLI)를 통해 제어됩니다.
@@ -499,8 +459,6 @@ Terraform은 단일 명령 행 애플리케이션 인 terraform 입니다. 그�
 Terraform 명령을 실행하면 다음과 같은 설명이 출력 됩니다.
 
 ```  
-<pre>
-<code>
 Usage: terraform [-version] [-help] <command> [args]
 The available commands for execution are listed below.
 The most common, useful commands are shown first, followed by
@@ -533,8 +491,6 @@ All other commands:
     force-unlock       Manually unlock the terraform state
     push               Obsolete command for Terraform Enterprise legacy (v1)
     state              Advanced state management
-</code>
-</pre>
 ```
 
 * Environment Variables
@@ -549,6 +505,7 @@ All other commands:
 * Providers
 * state
   
+-----
 ### ENVIRONMENT VARIABLES
 
 Terraform은 동작의 다양한 측면을 사용자 정의하기 위한 여러 환경변수를 사용할 수 있습니다.
@@ -564,6 +521,7 @@ export TF_VAR_alist='[1, 2, 3]'
 export TF_VAR_amap='{ foo = "bar", baz = "qux" }'
 ```
 
+-----
 ### APPLY
   
 terraform apply 명령은 원하는 구성 상태에 도달하는데 필요한 변경사항 또는 terraform plan 실행 계획에 의해 생성된 사전 결정된 조치 세트를 적용하는데 사용됩니다.
@@ -579,7 +537,8 @@ terraform apply [options] [dir-or-plan]
 -auto-approve - 신청하기 전에 대화식 계획 승인을 건너 뜁니다.
 -var 'foo=bar' - Terraform 구성에서 변수를 설정합니다. 이 플래그는 여러 번 설정할 수 있습니다. 변수 삾은 HCL로 해석되므로 이 플래그를 통해 목록 및 맵 값을 지정할 수 있습니다.
 -var-file=foo - Terraform 구성의 변수를 변수 파일에서 설정합니다. Terraform.tfvars 또는 .auto.tfvars 파일이 현재 디렉토리에 있으면 자동으로 로드됩니다. 이 플래그는 여러 번 사용할 수 있습니다.
-  
+
+-----
 ### DESTROY
   
 terraform destroy 명령은 Terraform 관리 인프라를 삭제하는데 사용됩니다.
@@ -596,6 +555,7 @@ Terraform에서 관리하는 인프라가 파괴됩니다. 파괴하기 전에 �
 "종속성"에 영향을주는 대신 -target 플래그는 지정된 대상에 의존하는 모든 자원도 삭제합니다. 자세한 내용은 terraform plan의 target 문서를 참조하십시오.
 terraform destroy 명령의 동작은 terraform plan -destroy 명령으로 언제든지 미리 볼 수 있습니다.
 
+-----
 ### FMT
   
 terraform rmt 명령은 Terraform 구성 파일을 표준 형식 및 스타일로 다시 쓰는데 사용됩니다. 이 명령은 Terraform 언어 스타일 규칙의 하위 집합과 함께 가독성을 위한 기타 작은 조정 사항을 적용합니다.
@@ -616,6 +576,7 @@ terraform graph | dot -Tpng > graph.png
 terraform graph | dot -Tsvg > graph.svg
 ```
 
+-----
 ### IMPORT
   
 terraform import 명령은 기존 리소스를 Terraform으로 가져 오는데 사용됩니다.
@@ -655,6 +616,7 @@ terraform import module.foo.aws_instance.bar i-abcd1234
 terraform import 'aws_instance.baz[0]' i-abcd1234
 ```
 
+-----
 ### INIT
   
 terraform init 명령은 Terraform 구성 파일이 포함된 작업 디렉토리를 초기화 하는데 사용됩니다. 새 Terraform 구성을 작성하거나 기존 버전 구성을 버전 제어에서 복제한 후에 실행해야하는 첫번째 명령입니다. 이 명령을 여러 번 실행하는것이 안전합니다.
@@ -665,6 +627,7 @@ terraform init 명령은 Terraform 구성 파일이 포함된 작업 디렉토�
 terraform init [options] [dir]
 ```
 
+-----
 ### OUTPUT
 
 terraform output 명령은 상태 파일에서 출력 변수의 값을 추출하는데 사용됩니다.
@@ -679,6 +642,7 @@ Terraform output [options] [NAME]
 
 -json - 지정된 경우 출력은 출력당 키를 사용하여 JSON 오브젝트로 형식화 됩니다. NAME을 정하면 지정된 출력만 반환됩니다. 추가 처리를 위해 jq와 같은 도구에 파이프로 연결할 수 있습니다.
 
+-----
 ### PLAN  
   
 terraform plan 명령은 실행 계획을 작성하는데 사용됩니다. Terraform은 명시적으로 비활성화되지 않은 경우 새로 고침을 수행한 다음 구성 파일에 지정된 원하는 상태를 달성하는데 필요한 작업을 결정합니다.
@@ -704,6 +668,7 @@ Terraform plan [option] [dir]
 -target 옵션을 사용하려면 리소스의 하위 집합에만 Terraform의 주의를 집중시킬 수 있습니다. 자원 주소 구문은 제한 조건을 지정하는데 사용됩니다.
 이 타겟팅 기능은 실수 복구 또는 Terraform 제한 문제 해결과 같은 예외적인 상황을 위해 제공됩니다. 일상적인 작업에는 -target을 사용하지 않는것이 좋습니다. 이로 인해 구성 드리프트가 감지되지 않고 실제 자원 상태가 구성과 어떻게 관련 되는지 혼동될 수 있습니다.
   
+-----
 ### PROVIDERS  
  
 terraform provider 명령은 현재 구성에 사용된 제공자에 대한 정보를 출력합니다.
@@ -737,6 +702,7 @@ terraform providers [config-path]
                   └── provider.aws (inherited)
 ```
 
+-----
 ### STATE
 
 terraform state 명령은 고급 상태 관리에 사용됩니다. Terraform 사용이 향상됨에 따라 Terraform 상태를 수정해야하는 경우가 있습니다. 상태를 직접 수정하는 대신 terraform state 명령을 사용할 수 있습니다.
@@ -762,10 +728,12 @@ terraform state <subcommand> [options] [args]
 
 Terraform state 부속 명령은 모두 마치 로컬 상태인 것처럼 원격 상태에서 작동합니다. 각 읽기 및 쓰기가 전체 네트워크 왕복을 수행하므로 읽기 및 쓰기가 평소보다 오래 걸릴 수 있습니다.
 
+-----
 ## PROVIDER
   
 Terraform은 물리적 시스템, VM, 네트워크 스위치, 컨테이너 등과 같은 인프라 리소스를 생성, 관리 및 업데이트하는 데 사용됩니다. 거의 모든 인프라 유형이 Terraform의 리소스로 표현 될 수 있습니다.
 
+-----
 ### AWS PROVIDER
   
 AWS (Amazon Web Services) 공급자는 AWS에서 지원하는 많은 리소스와 상호 작용하는데 사용됩니다. 공급자를 사용하려면 적절한 자격 증명으로 공급자를 구성해야 합니다.
@@ -835,6 +803,7 @@ provider"aws"{
 }
 ```
 
+-----
 ## PROVISIONERS
   
 Provisioner를 사용하면 서버 또는 기타 인프라 개체를 서비스 할 수 있도록 로컬 컴퓨터 또는 원격 ㅓㅁ퓨터에서 특정 작업을 모델링 할 수 있습니다.
@@ -844,6 +813,7 @@ Provisioner를 사용하면 서버 또는 기타 인프라 개체를 서비스 �
 Terraform에는 Terraform의 선언적 모델에서 직접 표현할 수 없는 특정 행동이 항상 있을것 임을 알고 프로비저닝의 개념을 실용주의의 척도로 포함합니다.
 하지만 이것은 Terraform 사용에 상당한 복잡성과 불확실성을 추가합니다. 최대한 Terraform에서 제공되는 기본 기능으로 시도하고, 다른 옵션이 없을 경우에만 Provisioner를 사용하는 것이 좋습니다.
   
+-----
 ### PROVISIONER CONNECTION SETTINGS  
 
 대부분의 프로 비져는 SSH 또는 WinRM을 통해 원격 리소스에 액세스 해야하며 연결 방법에 대한 세부 정보가 포함된 중첩된 연결 블록이 필요합니다.
@@ -858,6 +828,7 @@ provisioner"file"{
 }
 ```
 
+-----
 ### PROVISIONERS WITHOUT A RESOURCE
   
 특정 리소스와 직접 연결되지 않은 프로 비저를 실행해야 하는 경우 해당 공급자를 null_resource와 연결할 수 있습니다.
@@ -912,6 +883,7 @@ data ={
 }
 ```
 
+-----
 ## MODULES
 
 모듈은 함께 사용되는 여러 리소스의 컨테이너입니다. 모듈을 사용하여 단한 추상화를 생성 할 수 있으므로 물리적 객체의 관점이 아닌 아키텍처의 관점에서 인프라를 설명 할 수 있습니다.
@@ -933,6 +905,7 @@ $ tree sample-module/
 * Module Sources
 * Module Composition
 
+-----
 ### MODULE SOURCES
   
 모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
@@ -984,6 +957,7 @@ module"consul"{
   source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
 ```
   
+-----
 ### MODULE COMPOSITION
   
 모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
@@ -1034,6 +1008,8 @@ module"storage"{
 module"consul"{
   source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
 ```
+
+-----
 ### MODULE COMPOSITION
   
 모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
@@ -1085,6 +1061,7 @@ module"consul"{
   source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
 ```
   
+-----
 ### STATE
   
 Terraform은 인프라 및 구성에 대한 상태를 저장해야 합니다. 이 상태는 Terraform에서 실제 리소스를 구성에 매핑하고 메타 데이터를 추적하며 대규모 인프라의 성능을 향상 시키는데 사용 됩니다.
@@ -1094,6 +1071,7 @@ Terraform은 인프라 및 구성에 대한 상태를 저장해야 합니다. �
 * Remote State
 * State Locking
   
+-----
 ### PURPOSE OF TERRAFORM STATE
   
 Terraform이 작동하려면 상태가 필수 요건입니다. 이 페이지는 Terraform 상태가 필한 이유를 설명합니다.
@@ -1120,6 +1098,7 @@ Terraform은 일반적으로 구성을 사용하여 종속성 순서를 결정�
 
 기본 구성에서 Terraform은 Terraform이 실행 된 현재 작업 디렉토리의 파일에 상태를 저장합니다. 팀에서 Terraform을 사용할 때는 모든 사람이 동일한 상태로 작업하여 동일한 원격 객체에 작업을 적용하는 것이 중요합니다.
 
+-----
 ### REMOTE STATE
   
 기본적으로 Terraform은 terraform.tfstate 라는 파일에 상태를 로컬로 저장합니다. 팀에서 Terraform으로 작업할 때 로컬 파일을 사용하면 각 사용자가 Terraform을 실행하기 전에 항상 최신 상태 데이터를 가지고 있는지 확인하고 동시에 다른 사람이 Terraform을 실행하지 않도록 해야하므로 Terraform 사용이 복잡해집니다.
@@ -1156,11 +1135,13 @@ module"eks"{
   source ="github.com/nalbam/terraform-aws-eks?ref=v0.12.32"region =var.regionname   =var.namevpc_id     =data.terraform_remote_state.vpc.outputs.vpc_idsubnet_ids =data.terraform_remote_state.vpc.outputs.subnet_ids}
 ```
  
+-----
 ### STATE LOCKING
   
 백엔드에서 지원하는 경우 Terraform은 상태를 기록할 수 있는 모든 작업에 대해 상태를 잠급니다. 이렇게하면 다른 사람이 잠금을 획득하여 잠재적으로 상태를 손상시킬 수 없습니다.
 상태 잠금은 상태를 기록할 수 있는 모든 작업에서 자동을 발생합니다. -lock 플래그를 사용하여 대부분의 명령에 대해 상태 잠금을 비활성화 할 수 있지만 권장되지는 않습니다.
 
+-----
 ## BACKENDS
   
 Terraform의 Backend는 State가 로드 되는 방식과 applyh와 긑은 작이 실행되는 방식을 결정합니다.
@@ -1174,6 +1155,7 @@ Terraform의 Backend는 State가 로드 되는 방식과 applyh와 긑은 작이
 * Backend Configuration
 * Locking
 
+-----
 ### BACKEND CONFIGURATION
 
 백엔드는 terraform 섹션의 Terraform 파일에서 직접 구성됩니다. 백엔드를 구성한 후에는 terraform init을 해야합니다.
@@ -1188,6 +1170,7 @@ terraform{
 ※ Tip
 백엔드는 하나만 지정할 수 있습니다.
 
+-----
 ### LOCKING
   
 백엔드는 상태를 저장하고 상태 잠금을 위한 API를 제공합니다. 상태 잠금은 선택 사항입니다.
