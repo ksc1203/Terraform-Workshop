@@ -562,3 +562,36 @@ export TF_VAR_ami='ami-049d8641'
 export TF_VAR_alist='[1, 2, 3]'
 export TF_VAR_amap='{ foo = "bar", baz = "qux" }'
 ```
+
+### APPLY
+  
+terraform apply 명령은 원하는 구성 상태에 도달하는데 필요한 변경사항 또는 terraform plan 실행 계획에 의해 생성된 사전 결정된 조치 세트를 적용하는데 사용됩니다.
+
+#### Usage
+
+terraform apply [options] [dir-or-plan]
+기본적으로 apply는 구성에 대한 현재 디렉토리를 스캔하고 변경 사항을 적절하게 적용합니다.
+
+#### Options
+
+-input=true - 직접 설정되지 않은 경우 변수 입력을 요청합니다.
+-auto-approve - 신청하기 전에 대화식 계획 승인을 건너 뜁니다.
+-var 'foo=bar' - Terraform 구성에서 변수를 설정합니다. 이 플래그는 여러 번 설정할 수 있습니다. 변수 삾은 HCL로 해석되므로 이 플래그를 통해 목록 및 맵 값을 지정할 수 있습니다.
+-var-file=foo - Terraform 구성의 변수를 변수 파일에서 설정합니다. Terraform.tfvars 또는 .auto.tfvars 파일이 현재 디렉토리에 있으면 자동으로 로드됩니다. 이 플래그는 여러 번 사용할 수 있습니다.
+  
+### DESTROY
+  
+terraform destroy 명령은 Terraform 관리 인프라를 삭제하는데 사용됩니다.
+
+#### Usage
+
+'''
+terraform destroy [options] [dir]
+'''
+
+Terraform에서 관리하는 인프라가 파괴됩니다. 파괴하기 전에 확인을 요청합니다.
+이 명령은 계획 파일 인수를 제외하고 apply 명령이 수락하는 모든 인수 및 플래그를 승인합니다.
+-auto-approve 가 설정되면 삭제 확인이 표시되지 않습니다.
+"종속성"에 영향을주는 대신 -target 플래그는 지정된 대상에 의존하는 모든 자원도 삭제합니다. 자세한 내용은 terraform plan의 target 문서를 참조하십시오.
+terraform destroy 명령의 동작은 terraform plan -destroy 명령으로 언제든지 미리 볼 수 있습니다.
+
