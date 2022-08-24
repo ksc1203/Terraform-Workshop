@@ -585,9 +585,9 @@ terraform destroy 명령은 Terraform 관리 인프라를 삭제하는데 사용
 
 #### Usage
 
-'''
+```
 terraform destroy [options] [dir]
-'''
+```
 
 Terraform에서 관리하는 인프라가 파괴됩니다. 파괴하기 전에 확인을 요청합니다.
 이 명령은 계획 파일 인수를 제외하고 apply 명령이 수락하는 모든 인수 및 플래그를 승인합니다.
