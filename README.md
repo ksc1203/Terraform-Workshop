@@ -1033,7 +1033,57 @@ module"storage"{
 module"consul"{
   source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
 ```
+### MODULE COMPOSITION
+  
+모듈 블록의 소스 인수는 Terraform에게 원하는 하위 모듈의 소스 코드를 찾을 수 있는 위치를 알려줍니다.
+Terraform은 terraform init의 모듈 설치 단계에서 이를 사용하여 소스 코드를 로컬 디스크의 디렉토리에 다운로드하여 다른 Terraform 명령에서 사용할 수 있도록 합니다.
+모듈 설치 프로그램은 아래 나열된 다양한 소스 유형에서 설치를 지원합니다.
 
+#### Local paths
+
+로컬 경로 참조를 사용하면 단일 소스 리포지토리 내 구성의 일부를 가져올 수 있습니다.
+
+```hcl  
+module"consul"{
+  source ="./consul"}
+```
+
+#### GitHub
+
+Terraform은 접두사가 없는 github.com URL을 인식하여 자동으로 Git 리포지토리 소스로 해석합니다.
+
+```hcl  
+module"consul"{
+  source ="github.com/hashicorp/example"}
+```
+
+SSH를 통해 복제하려면 다음 형식을 사용하십시오.
+
+```hcl
+module"consul"{
+  source ="git@github.com:hashicorp/example.git"}
+```
+
+#### Generic Git, Mercurial repositories
+
+임의의 Git 리포지토리는 주소 앞에 특수한 git:: 접두사를 붙여서 사용할 수 있습니다. HTTPS 또는 SSH를 사용하려면 다음의 방법을 사용하십시오.
+
+```hcl
+module"vpc"{
+  source ="git::https://example.com/vpc.git"}
+module"storage"{
+  source ="git::ssh://username@example.com/storage.git"}
+```
+
+#### S3 buckets
+
+특수한 s3:: 접두어와 경로 스타일 S3 버킷 객체 URL을 사용하여 S3에 저장된 아카이브를 모듈 소스로 사용할 수 있습니다.
+
+```hcl
+module"consul"{
+  source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
+```
+  
 ### STATE
   
 Terraform은 인프라 및 구성에 대한 상태를 저장해야 합니다. 이 상태는 Terraform에서 실제 리소스를 구성에 매핑하고 메타 데이터를 추적하며 대규모 인프라의 성능을 향상 시키는데 사용 됩니다.
@@ -1105,3 +1155,7 @@ module"eks"{
   source ="github.com/nalbam/terraform-aws-eks?ref=v0.12.32"region =var.regionname   =var.namevpc_id     =data.terraform_remote_state.vpc.outputs.vpc_idsubnet_ids =data.terraform_remote_state.vpc.outputs.subnet_ids}
 ```
  
+### STATE LOCKING
+  
+백엔드에서 지원하는 경우 Terraform은 상태를 기록할 수 있는 모든 작업에 대해 상태를 잠급니다. 이렇게하면 다른 사람이 잠금을 획득하여 잠재적으로 상태를 손상시킬 수 없습니다.
+상태 잠금은 상태를 기록할 수 있는 모든 작업에서 자동을 발생합니다. -lock 플래그를 사용하여 대부분의 명령에 대해 상태 잠금을 비활성화 할 수 있지만 권장되지는 않습니다.![image](https://user-images.githubusercontent.com/66822357/186339587-bc51a0a3-e8b4-4c74-9d33-6e36c8ebd3d0.png)
