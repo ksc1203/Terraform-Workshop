@@ -26,7 +26,7 @@ Terraform 언어의 주요 목적은 Resource를 선언하는 것입니다. 리�
 resource"aws_vpc" "main"{
   cidr_block =var.base_cidr_block}
 BLOCK_TYPE"BLOCK_LABEL" "BLOCK_LABEL"{
-  # Block body
+  // Block body
 IDENTIFIER =EXPRESSION # Argument
 }
 '''
