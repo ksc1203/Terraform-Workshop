@@ -187,10 +187,10 @@ Terraform apply를 통하여 설정과 구성이 일치 하도록 실제 인프�
 
 Terraform CLI는 다음과 같은 메타 인수를 정의합니다. 이 인수는 모든 자원 유형과 함께 사용하여 자원의 동작을 변경할 수 있습니다.
 
-* cout: 개수에 따라 여러 자원을 작성
+* count: 개수에 따라 여러 자원을 작성
 * depend_on: 숨겨진 종속성을 명시적으로 지정
-* for_each: 맵 또는 문자열 세트에 따라 여러 자원을 성
-* provider: 기본이 아닌 공급자 구성을 선탱
+* for_each: 맵 또는 문자열 세트에 따라 여러 자원을 작성
+* provider: 기본이 아닌 공급자 구성을 선택
 * lifecycle: 라이프 사이클 사용자 정의
 * provisioner and connection: 리소스 생성 후 추가 작업을 수행
 
