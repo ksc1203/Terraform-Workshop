@@ -1159,3 +1159,42 @@ module"eks"{
   
 백엔드에서 지원하는 경우 Terraform은 상태를 기록할 수 있는 모든 작업에 대해 상태를 잠급니다. 이렇게하면 다른 사람이 잠금을 획득하여 잠재적으로 상태를 손상시킬 수 없습니다.
 상태 잠금은 상태를 기록할 수 있는 모든 작업에서 자동을 발생합니다. -lock 플래그를 사용하여 대부분의 명령에 대해 상태 잠금을 비활성화 할 수 있지만 권장되지는 않습니다.
+
+## BACKENDS
+  
+Terraform의 Backend는 State가 로드 되는 방식과 applyh와 긑은 작이 실행되는 방식을 결정합니다.
+
+#### Benefits of backends
+
+* 팀 협업: 상태를 원격 저장하고, 실행중 일때 상태를 잠금으로 보호하여 손상을 방지 할 수 있습니다.
+* 중요한 정보 유지: 정의 하지 않을 경우 메모리에만 저장됩니다. Amazon S3와 같이 원격지에 저장 할 수 있습니다.
+* 원격 운영: 대규모의 인프라의 생성 또는 변경은 작업 시간이 오래 걸릴 수 있습니다. 일부 백엔드는 원격작업을 원격에서 유지 할 수 있습니다. 원격 상태 저장소와 잠금 기능을 같이 사용 하면 팀 협업에 도움이 됩니다.
+	
+* Backend Configuration
+* Locking
+
+### BACKEND CONFIGURATION
+
+백엔드는 terraform 섹션의 Terraform 파일에서 직접 구성됩니다. 백엔드를 구성한 후에는 terraform init을 해야합니다.
+
+```hcl
+terraform{
+  backend"s3"{
+    region ="ap-northeast-2"bucket ="terraform-workshop-mzcdev"key    ="vpc.tfstate"}
+}
+```
+
+※ Tip
+백엔드는 하나만 지정할 수 있습니다.
+
+### LOCKING
+  
+백엔드는 상태를 저장하고 상태 잠금을 위한 API를 제공합니다. 상태 잠금은 선택 사항입니다.
+아래는 Amazon S3를 원격 상태 저장소로 사용하고, DynamoDB를 잠금 기능으로 선언한 예시 코드입니다.
+
+```hcl
+terraform{
+  backend"s3"{
+    region         ="ap-northeast-2"bucket         ="terraform-mz-seoul"key            ="vpc-demo.tfstate"dynamodb_table ="terraform-mz-seoul"encrypt        =true}
+}
+```
