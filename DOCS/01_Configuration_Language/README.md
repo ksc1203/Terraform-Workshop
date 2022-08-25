@@ -43,3 +43,8 @@ Terraform은 각각 일련의 리소스 유형을 정의하고 관리하는 Prov
 * Local Values
 * Data Sources
 * Modules
+
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
