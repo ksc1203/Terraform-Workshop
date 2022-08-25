@@ -30,3 +30,9 @@ depends_on 출력 값은 모듈에서 데이터를 전달하는 수단 일 뿐�
 #### Accessing Child Module Outputs
 
 상위 모듈에서 하위 모듈의 출력은 module.<MODULE NAME>.<OUTPUT NAME>로 표현할 수 있습니다. 예를 들어, server라는 하위 모듈이 private_ip라는 출력을 선언 한 경우 ㅐ당 값에 module.server.private_ip로 액세스할 수 있습니다.
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)

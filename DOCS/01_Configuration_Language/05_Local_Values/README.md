@@ -35,3 +35,9 @@ locals {
   vpc_id = var.create_vpc ? element(concat(aws_vpc.this.*.id, [""]), 0) : var.vpc_id
 }
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)

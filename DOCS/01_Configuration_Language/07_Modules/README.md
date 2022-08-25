@@ -39,3 +39,9 @@ resource "aws_elb" "example" {
   instances = module.servers.instance_ids
 }
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)

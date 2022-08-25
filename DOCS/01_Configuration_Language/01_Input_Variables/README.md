@@ -38,3 +38,9 @@ resource "aws_instance" "example" {
   ami = var.ami_id
  }
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)
