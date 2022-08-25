@@ -36,15 +36,15 @@ Terraform CLI는 Terraform 구성을 평가하고 적용하기 위한 엔진입�
 
 Terraform은 각각 일련의 리소스 유형을 정의하고 관리하는 Provider 라는 플러그인을 사용합니다. 대부분의 Provider는 특정 클라우드 또는 On-premise 인프라 서비스와 연결되어 있으므로 Terraform은 해당 서비스 내에서 인프라 개체를 관리할 수 있습니다
 
-* Input Variables
-* Providers
-* Resources
-* Output Values
-* Local Values
-* Data Sources
-* Modules
+* [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/01_Input_Variables)
+* [Providers](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/02_Providers)
+* [Resources](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/03_Resources)
+* [Output Values](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/04_Output_Values)
+* [Local Values](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/05_Local_Values)
+* [Data Sources](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/06_Data_Sources)
+* [Modules](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language/07_Modules)
 
 
 ### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
 
-### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
