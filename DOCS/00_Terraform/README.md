@@ -8,3 +8,7 @@ Terraform은 Resource를 선언적인 코드로 생성/관리 할 수 있도록 
 * Modules
 * State
 * Backends
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
