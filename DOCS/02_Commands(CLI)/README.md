@@ -37,14 +37,18 @@ All other commands:
     state              Advanced state management
 ```
 
-* Environment Variables
-* Apply
-* Destroy
-* Fmt
-* Graph
-* Import
-* Init
-* Output
-* Plan
-* Providers
-* state
+* [Environment Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/01_Environment_Variables)
+* [Apply](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/02_Apply)
+* [Destroy](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/03_Destroy)
+* [Fmt](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/04_FMT)
+* [Graph](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/05_Graph)
+* [Import](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/06_Import)
+* [Init](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/07_Init)
+* [Output](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/08_Output)
+* [Plan](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/09_Plan)
+* [Providers](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/10_Providers)
+* [state](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/11_State)
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
