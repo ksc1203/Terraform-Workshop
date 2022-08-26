@@ -53,6 +53,6 @@ data ={
 * [Module Sources](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/05_Modules/01_Module_Sources)
 * [Module Composition](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/05_Modules/02_Module_Composition)
 
-## [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
 
 ### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
