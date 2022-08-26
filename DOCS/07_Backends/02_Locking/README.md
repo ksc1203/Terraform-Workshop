@@ -7,3 +7,9 @@ terraform{
     region         ="ap-northeast-2"bucket         ="terraform-mz-seoul"key            ="vpc-demo.tfstate"dynamodb_table ="terraform-mz-seoul"encrypt        =true}
 }
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [Backends](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/07_Backends)

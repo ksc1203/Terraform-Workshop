@@ -9,3 +9,9 @@ terraform{
 
 ※ Tip
 백엔드는 하나만 지정할 수 있습니다.
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [Backends](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/07_Backends)
