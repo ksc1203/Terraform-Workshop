@@ -47,3 +47,8 @@ module"consul"{
   source ="s3::https://s3-eu-west-1.amazonaws.com/examplecorp-terraform-modules/vpc.zip"}
 ```
   
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [Modules](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/05_Modules)
