@@ -64,3 +64,9 @@ provider"aws"{
     role_arn     ="arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME"session_name ="SESSION_NAME"external_id  ="EXTERNAL_ID"}
 }
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Providers](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/03_Providers)
