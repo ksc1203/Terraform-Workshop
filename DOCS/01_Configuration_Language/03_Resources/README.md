@@ -152,4 +152,4 @@ Ignore_changes(list of attribute names) - Terraform은 실제 인프라 개체�
 
 ### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
 
-### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)
+### [Configuration Language](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)

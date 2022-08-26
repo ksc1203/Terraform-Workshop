@@ -35,4 +35,4 @@ depends_on 출력 값은 모듈에서 데이터를 전달하는 수단 일 뿐�
 
 ### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
 
-### [Input Variables](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/Input_Variables)
+### [Configuration Language](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
