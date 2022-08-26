@@ -9,3 +9,8 @@ provisioner"file"{
     type     ="ssh"user     ="root"password ="${var.root_password}"host     ="${var.host}"}
 }
 ```
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [Provisioners](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/04_Provisioners)
