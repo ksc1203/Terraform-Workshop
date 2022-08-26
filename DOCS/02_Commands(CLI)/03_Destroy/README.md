@@ -11,3 +11,9 @@ Terraform에서 관리하는 인프라가 파괴됩니다. 파괴하기 전에 �
 -auto-approve 가 설정되면 삭제 확인이 표시되지 않습니다.
 "종속성"에 영향을주는 대신 -target 플래그는 지정된 대상에 의존하는 모든 자원도 삭제합니다. 자세한 내용은 terraform plan의 target 문서를 참조하십시오.
 terraform destroy 명령의 동작은 terraform plan -destroy 명령으로 언제든지 미리 볼 수 있습니다.
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

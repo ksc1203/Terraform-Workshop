@@ -35,3 +35,8 @@ terraform import module.foo.aws_instance.bar i-abcd1234
 terraform import 'aws_instance.baz[0]' i-abcd1234
 ```
 
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

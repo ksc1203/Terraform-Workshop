@@ -47,7 +47,7 @@ All other commands:
 * [Output](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/08_Output)
 * [Plan](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/09_Plan)
 * [Providers](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/10_Providers)
-* [State](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/11_State)
+* [state](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI)/11_State)
 
 ### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
 

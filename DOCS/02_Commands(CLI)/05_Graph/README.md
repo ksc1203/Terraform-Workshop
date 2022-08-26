@@ -16,3 +16,9 @@ Terraform 리소스의 시각적 종속성 그래프를 출력합니다.
 terraform graph | dot -Tpng > graph.png
 terraform graph | dot -Tsvg > graph.svg
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

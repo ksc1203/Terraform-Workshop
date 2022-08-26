@@ -20,3 +20,9 @@ terraform state <subcommand> [options] [args]
 #### Remote State
 
 Terraform state 부속 명령은 모두 마치 로컬 상태인 것처럼 원격 상태에서 작동합니다. 각 읽기 및 쓰기가 전체 네트워크 왕복을 수행하므로 읽기 및 쓰기가 평소보다 오래 걸릴 수 있습니다.
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

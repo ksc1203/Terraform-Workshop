@@ -12,3 +12,8 @@ terraform apply [options] [dir-or-plan]
 -var 'foo=bar' - Terraform 구성에서 변수를 설정합니다. 이 플래그는 여러 번 설정할 수 있습니다. 변수 삾은 HCL로 해석되므로 이 플래그를 통해 목록 및 맵 값을 지정할 수 있습니다.
 -var-file=foo - Terraform 구성의 변수를 변수 파일에서 설정합니다. Terraform.tfvars 또는 .auto.tfvars 파일이 현재 디렉토리에 있으면 자동으로 로드됩니다. 이 플래그는 여러 번 사용할 수 있습니다.
 
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

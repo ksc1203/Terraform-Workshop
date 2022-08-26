@@ -10,3 +10,9 @@ export TF_VAR_ami='ami-049d8641'
 export TF_VAR_alist='[1, 2, 3]'
 export TF_VAR_amap='{ foo = "bar", baz = "qux" }'
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

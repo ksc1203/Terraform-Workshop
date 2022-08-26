@@ -21,3 +21,8 @@ Terraform plan [option] [dir]
 -target 옵션을 사용하려면 리소스의 하위 집합에만 Terraform의 주의를 집중시킬 수 있습니다. 자원 주소 구문은 제한 조건을 지정하는데 사용됩니다.
 이 타겟팅 기능은 실수 복구 또는 Terraform 제한 문제 해결과 같은 예외적인 상황을 위해 제공됩니다. 일상적인 작업에는 -target을 사용하지 않는것이 좋습니다. 이로 인해 구성 드리프트가 감지되지 않고 실제 자원 상태가 구성과 어떻게 관련 되는지 혼동될 수 있습니다.
   
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))

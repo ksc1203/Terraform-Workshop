@@ -6,3 +6,8 @@ terraform rmt 명령은 Terraform 구성 파일을 표준 형식 및 스타일�
 terraform fmt [options] [dir]
 ```
 
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS)
+
+### [Commands(CLI)](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/02_Commands(CLI))
