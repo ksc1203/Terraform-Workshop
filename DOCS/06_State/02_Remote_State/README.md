@@ -31,3 +31,9 @@ data"terraform_remote_state" "vpc"{
 module"eks"{
   source ="github.com/nalbam/terraform-aws-eks?ref=v0.12.32"region =var.regionname   =var.namevpc_id     =data.terraform_remote_state.vpc.outputs.vpc_idsubnet_ids =data.terraform_remote_state.vpc.outputs.subnet_ids}
 ```
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [State](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/06_State)

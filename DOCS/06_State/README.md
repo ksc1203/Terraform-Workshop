@@ -5,3 +5,7 @@ Terraform은 인프라 및 구성에 대한 상태를 저장해야 합니다. �
 * Purpose of Terraform State
 * Remote State
 * State Locking
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)

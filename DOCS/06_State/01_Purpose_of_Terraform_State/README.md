@@ -21,3 +21,9 @@ Terraform은 일반적으로 구성을 사용하여 종속성 순서를 결정�
 #### Syncing
 
 기본 구성에서 Terraform은 Terraform이 실행 된 현재 작업 디렉토리의 파일에 상태를 저장합니다. 팀에서 Terraform을 사용할 때는 모든 사람이 동일한 상태로 작업하여 동일한 원격 객체에 작업을 적용하는 것이 중요합니다.
+
+### [첫 페이지](https://github.com/EstebanHan/Terraform-Workshop)
+
+### [Docs 페이지](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/01_Configuration_Language)
+
+### [State](https://github.com/EstebanHan/Terraform-Workshop/tree/main/DOCS/06_State)
